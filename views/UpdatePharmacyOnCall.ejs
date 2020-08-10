@@ -1,0 +1,13 @@
+<%- include('header'); -%>
+
+<form class="form1" action="/submitUpdateOnCall" method="post">
+  <label class="label-input" >Enter your password</label>
+  <input class="form-input" type="password" name="adminPassword" placeholder="password">
+  <label class="label-input" > Date </label>
+  <input type="date" id="dates" name="date"  min="2020-08-06" max="2020-08-31">
+  <label class="label-input" > Insert  list of phamacies separated by ; </label>
+  <input class="form-input" type="text" name="pharmaciesNames" placeholder="Enter Pharmacies Oncall">
+  <input class="form-input" type="submit" id="submit-input" value="Submit Update Oncall">
+</form>
+<h6 style="color: red" > <em> <%= message3 %> </em> </h6>
+<%- include('footer'); -%>

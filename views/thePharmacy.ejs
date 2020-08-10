@@ -1,0 +1,88 @@
+<%- include('header2'); -%>
+
+<div class="row" style="text-align:center">
+  <h1> <%= theName %> pharmacy</h1>
+</div>
+
+<div class="row">
+  <div class=" col-3 div-pharmacy "  style="background-color:white">
+    <span class="span1"> <img class="img-span" onclick="changeClass1()" src="/images/addIcon.jpg" style="height: 80px"> </span>
+    <span class="span1"> <img class="img-span" onclick="changeClass2()" src="/images/minus.jpg" style="height: 80px"> </span>
+    <span class="span2">
+      <img class="img-span" onclick="changeClass3(); document.getElementById('sendInput').click();"src="/images/search.jpg" style="height: 80px" >
+      <form  action="/searchDrug/<%=theName %>" method="post" style="margin-top:0px;height: 30px;width: 160px;">
+        <input type="text" required name="nameOfDrug" placeholder="Enter drug's name" class="input-drug2" >
+        <input type="submit" id="sendInput" class="input-drug2" style="display:none">
+      </form>
+    </span>
+    <span class="span1"> <a href="drugList/<%=theName %>"><img onclick="changeClass4();" style="height: 80px" class="img-span" src="/images/listOfProduct.jpg" ></a> </span>
+
+  </div>
+  <div class=" col-9 div-pharmacy " style="background-color:white">
+    <div class=" div-table0" id="add" >
+      <form class="form2" action="/submitAddDrug %>" method="post">
+        <label class="label-input">Enter your password</label>
+        <input class="form-input" type="password" name="adminPassword" >
+        <label class="label-input">Drug's Name</label>
+        <input class="form-input" type="text" name="pharmacyName" placeholder="Enter drug's name">
+        <label class="label-input">Price / Bottle 0r Card</label>
+        <input class="form-input" type="text" name="pharmacyLocation" placeholder="Enter Drug's Price ">
+        <label class="label-input"> Quantity in Stock </label>
+        <input class="form-input" type="text" name="pharmacyPhoneNumber" placeholder="Enter Quantity">
+        <input type="submit" id="submit-input" value="submit Add Drug">
+      </form>
+
+    </div>
+    <div class=" div-table2" id="remove" style="background-color:white" >
+      <form class="form2" action="/submitRemovedDrug/<%= theName %>" method="post">
+        <label class="label-input">Enter your password</label>
+        <input class="form-input" type="password" name="adminPassword" >
+        <label class="label-input">Drug's Name</label>
+        <input class="form-input" type="text" name="pharmacyName" placeholder="Enter drug's name">
+        <label class="label-input">Price / Bottle 0r Card</label>
+        <input class="form-input" type="text" name="pharmacyLocation" placeholder="Enter Drug's Price ">
+        <label class="label-input"> Quantity Removed </label>
+        <input class="form-input" type="text" name="pharmacyPhoneNumber" placeholder="Enter Quantity">
+        <input type="submit" id="submit-input" value="Submit Removed Drug">
+      </form>
+    </div>
+    <div class=" div-table2" id="search" style="background-color:#87CEEB; text-align:center;" >
+      <div class="toCenter"><h4> <b> <em> Enter drug's name inside the field at your left </em> </b> </h4></div>
+    </div>
+    <div class=" div-table2" id="drug" style="background-color:brown" >
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    function changeClass1(){
+        document.getElementById("add").className = "div-table1";
+        document.getElementById("remove").className = "div-table2";
+        document.getElementById("search").className = "div-table2";
+        document.getElementById("drug").className = "div-table2";
+    }
+
+    function changeClass2(){
+      document.getElementById("add").className = "div-table2";
+      document.getElementById("remove").className = "div-table1";
+      document.getElementById("search").className = "div-table2";
+      document.getElementById("drug").className = "div-table2";
+    }
+
+    function changeClass3(){
+      document.getElementById("add").className = "div-table2";
+      document.getElementById("remove").className = "div-table2";
+      document.getElementById("search").className = "div-table1";
+      document.getElementById("drug").className = "div-table2";
+    }
+
+    function changeClass4(){
+      document.getElementById("add").className = "div-table2";
+      document.getElementById("remove").className = "div-table2";
+      document.getElementById("search").className = "div-table2";
+      document.getElementById("drug").className = "div-table1";
+    }
+
+</script>
+<%- include('footer'); -%>

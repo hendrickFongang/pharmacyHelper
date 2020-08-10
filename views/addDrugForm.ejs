@@ -1,0 +1,22 @@
+<%- include('header'); -%>
+
+<form class="form1" action="/submitAddDrug" method="post">
+  <label class="label-input" >Enter your password</label>
+  <input class="form-input" type="password" required name="adminPassword" placeholder="password">
+  <label class="label-input" >Pharmacy Name</label>
+  <input class="form-input" type="text" required name="pharmacyName" placeholder="Enter pharmacy name">
+  <label class="label-input" > Drug's Name</label>
+  <input class="form-input" type="text" required name="drugName" placeholder="Enter Drug's Name">
+  <label class="label-input" > Quantity </label>
+  <input class="form-input" type="number" required name="quantity" placeholder="Quantity">
+  <select class="form-input" required name="typeOfDrug" id="cars">
+  <option value="Bottle"> Bottle </option>
+  <option value="Card"> Card </option>
+  <label class="label-input" > Price <ins></ins>n Cfa</label>
+  <input class="form-input" type="number" required name="price" placeholder="price per unit">
+  <input class="form-input" type="submit" id="submit-input" value="Submit add Drug">
+</form>
+
+<h6 style="color: red" > <em> <%= message6 %> </em> </h6>
+
+<%- include('footer'); -%>

@@ -1,0 +1,19 @@
+<%- include('header'); -%>
+<h6 style="color: red" > <em> <%= message6 %> </em> </h6>
+<form class="form1" action="/submitAddDrug2" method="post">
+  <label class="label-input" >Enter your password</label>
+  <input class="form-input" type="password" required name="adminPassword" placeholder="password">
+  <label class="label-input" ><%= foundDrugs.pharmacyName%> Pharmacy </label>
+  <input class="form-input" style="display:none" value="<%= foundDrugs.pharmacyName%> " type="text" required name="pharmacyName" placeholder="Enter pharmacy name">
+  <label class="label-input" > <%= foundDrugs.drugName%> </label>
+  <input class="form-input" type="text" style="display:none" required value="<%= foundDrugs.drugName%> " name="drugName" placeholder="Enter Drug's Name">
+  <label class="label-input" >  <%= qty %> <%= foundDrugs.typeOfDrug%> </label>
+  <input class="form-input" type="number" style="display:none" value="<%=qty%> " required name="quantity" placeholder="Quantity">
+  <label class="label-input" style="color:red" > set Price in Cfa</label>
+  <input class="form-input" type="number" required name="price" placeholder="price per unit">
+  <input class="form-input" type="submit" id="submit-input" value="Submit add Drug">
+</form>
+
+<h6 style="color: red" > <em> "attention !!! you are setting a new price for this product" </em> </h6>
+
+<%- include('footer'); -%>

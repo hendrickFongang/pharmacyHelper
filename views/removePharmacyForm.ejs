@@ -1,0 +1,13 @@
+<%- include('header'); -%>
+
+<form class="form1" action="/submitRemovePharmacy" method="post">
+  <label class="label-input" > Enter Admind Name </label>
+  <input class="form-input" type="text" name="admindName" >
+  <label class="label-input" > Enter password </label>
+  <input class="form-input" type="password" name="password" placeholder="password">
+  <label class="label-input" > Pharmacy to Remove</label>
+  <input class="form-input" type="text" name="pharmacyName" placeholder="Enter pharmacy name">
+  <input class="form-input" type="submit" id="submit-input" value="Submit remove pharmacy">
+</form>
+
+<%- include('footer'); -%>

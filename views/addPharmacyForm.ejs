@@ -1,0 +1,15 @@
+<%- include('header'); -%>
+
+<form class="form1" action="/submitAddPharmacy" method="post">
+  <label class="label-input" >Enter your password</label>
+  <input class="form-input" type="password" required name="adminPassword" placeholder="password">
+  <label class="label-input" >Name</label>
+  <input class="form-input" type="text" name="pharmacyName" required placeholder="Enter pharmacy name">
+  <label class="label-input" >Location</label>
+  <input class="form-input" type="text" name="pharmacyLocation" required placeholder="Enter pharmacy location">
+  <label class="label-input" >Phone number </label>
+  <input class="form-input" type="text" name="pharmacyPhoneNumber" required placeholder="Enter pharmacy phone number">
+  <input class="form-input" type="submit" id="submit-input" value="Submit add pharmacy">
+</form>
+
+<%- include('footer'); -%>
