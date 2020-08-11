@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
+const _ = require("lodash")
 
 mongoose.connect('mongodb://localhost:27017/Pharmacy', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -20,7 +21,8 @@ var message3 =  "";
 var message5 =  "";
 var message6 =  "";
 var message7 =  "";
-
+var message8 =  "";
+var qty;
 const pharmacySchema = new mongoose.Schema({
   name:String,
   locations:String,
@@ -58,7 +60,7 @@ app.get("/addNewDrug", function(req,res){
 });
 
 app.get("/removePharmacy", function(req,res){
-  res.render("removePharmacyForm");
+  res.render("removePharmacyForm", {message8:message8});
 });
 
 app.get("/addDrug", function(req,res){
@@ -82,8 +84,20 @@ app.get("/pharmacy/:pharmacyName", function(req, res){
   res.render("thePharmacy", {theName:theName});
 });
 
+// test this
+app.get("/drugList/:pharmacyName", function(req, res){
+  theName = req.params.pharmacyName;
+  drugList.find({pharmacyName:theName}).sort('drugName').exec(function(err, results) {
+    if(!err){
+      if(results){
+        res.render("listOfProduct",{results:results,theName:theName})
+      }
+    }
+  });
+});
+
 app.get("/listOfPharmacy", function(req,res){
-   pharmacyList.find({}, function(err, result) {
+   pharmacyList.find({}).sort('pharmacyName').exec(function(err, result) {
       if (err) {
         res.send(err);
       } else {
@@ -93,7 +107,7 @@ app.get("/listOfPharmacy", function(req,res){
 });
 
 app.get("/ofOnCall", function(req,res){
-   onCall.find({}, function(err, docs) {
+   onCall.find({}).sort('pharmacyName').exec(function(err, docs) {
       if (err) {
         res.send(err);
       } else {
@@ -118,7 +132,7 @@ app.post("/submitAddPharmacy", function(req, res){
     pharmacyId:thisId
   }) ;
   var pharmacies = [];
-  pharmacyList.find({}, function(err, result)
+  pharmacyList.find({}).sort('pharmacyName').exec(function(err, result)
   {
      if (err)
      {
@@ -175,7 +189,7 @@ app.post("/submitAddDrug", function(req, res)
       }
       else if(foundDrugs && price === foundDrugs.price)
       {
-        var qty = quantity + foundDrugs.quantity
+        qty = quantity + foundDrugs.quantity
         drugList.updateOne({pharmacyName:pharmacyName, drugName:drugName, typeOfDrug:typeOfDrug},{quantity:qty}, function(err)
         {
           if(!err)
@@ -192,7 +206,7 @@ app.post("/submitAddDrug", function(req, res)
             console.log(err)
           }else
           {
-            message6 = "Successfully save " + drugName + " " + typeOfDrug + " new quantity " + qty
+            message6 = "Successfully save " + drugName + " " + typeOfDrug + " new quantity " + quantity + foundDrugs.quantity
             res.redirect("addDrug");
           }
         });
@@ -274,17 +288,18 @@ app.post("/submitRemovePharmacy", function(req, res) {
          {
            if(!err)
            {
-             message = "Successfully delete " + pharmacyName + " pharmacy"
+             message8 = "Successfully delete " + pharmacyName + " pharmacy"
+             res.render("removePharmacyForm", {message8: message8})
            }
          })
        }
        else
        {
-         message = "check your input there is no pharmacy under this name"
+         message8 = "check your input there is no pharmacy under this name"
+         res.render("removePharmacyForm", {message8: message8})
        }
      }
    });
-   res.render("/removeDrugForm")
 });
 
 app.post("/submitUpdateOnCall", function(req, res){
@@ -294,16 +309,23 @@ app.post("/submitUpdateOnCall", function(req, res){
     date:date,
     pharmacies:pharmacies
   })
-  onCall.find({}, function(err, docs) {
+  onCall.find({date:date}, function(err, docs){
+    if(!err){
+      if(docs.length>=1){
+        message3 = "check date!!! onCall already set for this date"
+      }
+      else{
+        thisOnCall.save();
+        message3 = "Successfully update pharmacies oncall for the date " + date ;
+      }
+    }
   })
-  thisOnCall.save();
-  message3 = "Successfully update pharmacie oncall for the date " + date ;
   res.redirect("ofOnCall")
 });
 
 app.post("/searchDrug", function(req, res){
 nameOfDrug  = req.body.nameOfDrug;
-drugList.find({nameOfDrug}, function(err,results) {
+drugList.find({drugName:drugName}).sort('pharmacyName').exec(function(err, results) {
   if(!err){
     if(results){
       res.render("listOfDrug", { results:results,message5:message5 })
@@ -316,6 +338,25 @@ drugList.find({nameOfDrug}, function(err,results) {
 
 })
 });
+
+app.post("/searchDrug2", function(req, res){
+drugName = req.body.drugName;
+pharmacyName = req.body.pharmacyName;
+drugList.find({pharmacyName:pharmacyName, drugName:drugName}, function(err,results) {
+  if(!err){
+    if(results.length>=1){
+      res.render("listOfDrug", { results:results, message5:message5 })
+    }
+    else{
+      message5 = "no drug with such a name in the availlable phamacies"
+      res.render("searchDrugForm", {message5:message5, results:results})
+    }
+  }
+
+})
+});
+
+
 
 app.listen(5000, function() {
   console.log("Server started on port 5000");

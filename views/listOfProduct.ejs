@@ -1,0 +1,28 @@
+<%- include('header2'); -%>
+<div class="row" style="text-align:center">
+  <h1> <%= theName %> pharmacy</h1>
+</div>
+
+<div class="div-table">
+  <table class="table table-hover table-dark table1">
+    <thead>
+      <tr>
+        <th scope="col" style="color: yellow">#</th>
+        <th scope="col" style="color: yellow"> <b> Drug's Name </b> </th>
+        <th scope="col" style="color: yellow"> <b> drug's type </b> </th>
+        <th scope="col" style="color: yellow"> <b> quantity </b> </th>
+        <th scope="col" style="color: yellow"> <b> Price </b> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i=0; i< results.length; i++) { %>
+        <tr>
+          <th scope="row">  <%= i +1 %> </th>
+          <td> <p style = "text-transform:uppercase;">  <b> <%= results[i].drugName %> </b> </a> </p> </td>
+          <td>  <p style = "text-transform:capitalize;"> <%= results[i].typeOfDrug %>  </p> </td>
+          <td> <p style = "text-transform:capitalize;"><%= results[i].quantity %>  </p> </td>
+          <td> <p style = "text-transform:capitalize;"><%= results[i].price %>  </p> </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
